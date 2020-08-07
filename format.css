@@ -1,0 +1,31 @@
+h1 {
+  color: navy;
+  margin-left: 200px;
+  font-family: Arial, sans-serif;
+}
+
+p {
+  font-family: Arial, sans-serif;
+}
+
+img.rounded-corners {
+  border-radius: 30px;
+}
+
+img.resize {
+  max-width:85%;
+  max-height:85%;
+}
+
+#wrapper {
+  display: flex;
+}
+
+#left {
+  flex: 0 0 15%;
+}
+
+#right {
+  flex: 0 0 1;
+}
+
