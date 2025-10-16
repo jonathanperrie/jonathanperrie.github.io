@@ -1,1 +1,5 @@
-bye
+---
+layout: page
+title: Contact
+permalink: /contact/
+---
