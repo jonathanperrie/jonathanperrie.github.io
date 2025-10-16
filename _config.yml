@@ -1,0 +1,16 @@
+# --- basic site meta ---
+title: Your Site Title
+description: A short tagline for the site
+
+# --- theme (simple + built-in on Pages) ---
+theme: jekyll-theme-minimal
+# or: theme: minima
+
+# --- urls ---
+# If this repo is USERNAME.github.io (user/ org site):
+url: https://USERNAME.github.io
+baseurl: ""   # leave empty for user/org site
+
+# If this is a *project* repo (e.g., my-project):
+# url: https://USERNAME.github.io
+# baseurl: "/my-project"
