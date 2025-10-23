@@ -1,8 +1,0 @@
-title: Your Site Title
-description: A short tagline for the site
-theme: minima
-
-header_pages:
-  - index.md
-  - research.md
-  - contact.md
