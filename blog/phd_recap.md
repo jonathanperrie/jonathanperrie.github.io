@@ -6,7 +6,7 @@ Here I will go through one contribution without revealing any biological data no
 
 ## GeoMx data
 
-GeoMx is like bulk RNA-seq except an experimentalist will have selected specific regions of the tissue to probe. NanoString (Bruker) provides coordinates, nuclei counts, sequencing read statistics, and morphology protein channel files. Every spot will contain 100-1k cells with gene measurements in aggregate. We sampled spots from the alveoli inflammed with pneumonitis and the granuloma core and mantle regions. 
+GeoMx is like bulk RNA-seq except an experimentalist will have selected specific regions of the tissue to probe. NanoString (Bruker) provides coordinates, nuclei counts, sequencing read statistics, and morphology protein channel files. Every spot will contain 100-1k cells with gene measurements in aggregate. We sampled spots from the alveoli inflamed with pneumonitis and the granuloma core and mantle regions. 
 
 <img
     src="../data/man1_sup2.png"
@@ -36,9 +36,9 @@ Instead of just contrasting two groups, how do we contrast three (AvBvC)? Well, 
     style="width:33%; height:auto; border-radius:12px;"
 />
 
-*3D volcano plot with annotations [figure 2.3]([https://www.biorxiv.org/content/10.1101/2025.07.15.664002v3.supplementary-material](https://escholarship.org/uc/item/3bf2h046)).*
+*3D volcano plot with annotations [figure 2.3](https://escholarship.org/uc/item/3bf2h046).*
 
-The genes enriched in between contrasts AvC and AvB are the A genes, and the genes enriched between AvC and BvC are the ~C genes. Both sets constitue gene modules as highlighted by the annotations. These genes are mapped to colors, and in the thesis we demonstrated that plotting transcripts with those colors captures the infected lung tissue structure without relying on segmentation (the core was green, the mantle was blue, and the inner layer of the granuloma was cyan). 
+The genes enriched in between contrasts AvC and AvB are the A genes, and the genes enriched between AvC and BvC are the ~C genes. Both sets constitute gene modules as highlighted by the annotations. These genes are mapped to colors, and in the thesis, we demonstrated that plotting transcripts from the CosMx gene panel with those colors captures the infected lung tissue structure without relying on segmentation (the core was green, the mantle was blue, and the inner layer of the granuloma was cyan). 
 
 ## Code
 Mapping fold change to 3D space and transforming 3D plane back into 2D. Note that we had to choose two genes on opposite ends of the plane to get a good projection. We converted genes in [RGB to hex colors](https://drive.google.com/file/d/1fTnh9-Va414HWgF7B67snyeMQ7Qm7wR1/view?usp=sharing). 
@@ -152,7 +152,7 @@ axis_mf_df <- data.frame(x = axis_points * transformed_axis_mf[1],
                          col = gradient_colors)
 </pre>
 
-Plotting and labelling most significantly enriched genes. 
+Plotting and labeling most significantly enriched genes. 
 <pre>
 ```R
 g <- ggplot(coords_2d, aes(x=x, y=y, color=color, alpha=alpha))
