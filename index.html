@@ -1,83 +1,48 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌵</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Jonathan Perrie | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         body {
-            background-color: #102a23; /* A lighter green shade */
-            color: #a7f3d0; /* Corresponds to green-200 */
+            background-color: #102a23;
+            color: #a7f3d0;
         }
-        .tight { letter-spacing: -0.04em; }
+        .prose h1, .prose h2, .prose h3 { color: #d1fae5; }
+        .prose p { color: #a7f3d0; }
+        .prose a { color: #6ee7b7; text-decoration: underline; }
+        .prose ul { list-style-type: disc; padding-left: 1.5rem; }
+        .prose li { margin-bottom: 0.5rem; }
+        .prose pre {
+            background-color: #0c1f1a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+        .prose code {
+            color: #f0fdf4;
+            font-family: monospace;
+        }
     </style>
-<link rel="stylesheet" href="/index.css">
 </head>
-<body>
+<body class="bg-[#102a23]">
     <div id="root"></div>
 
     <script type="text/babel">
     
     // DATA AND CONSTANTS
-    const PROJECTS = [
+    const BLOG_POSTS = [
       {
-        id: "project-one",
-        title: "Project One",
-        description: "A brief description of Project One. This project solves a real-world problem by leveraging modern technologies.",
-        tags: ["React", "Node.js", "API"],
-        imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZmemZpZ3pyeXF0ZWtqZ3huc3lwMmd2eTBxZHYxZHF0YTRtdGZpZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L8K62iTDQgHsnJg5bp/giphy.gif",
-        githubUrl: "#",
-        detailedDescription: "The idea behind Project One was to create a seamless user experience for managing tasks. It features a minimalist design and a powerful backend to ensure data is always synced across devices."
-      },
-      {
-        id: "project-two",
-        title: "Project Two",
-        description: "This project explores data visualization techniques to make complex datasets understandable and actionable.",
-        tags: ["D3.js", "JavaScript", "Data Viz"],
-        imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExczBnaTd2aGdtb2pkMDU4dnp0Y2k5dGZyZmdpZmJpcnJ2YnR6c25ocyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xT9c_62A2n84g4H12o/giphy.gif",
-        githubUrl: "#",
-        detailedDescription: "Project Two was born from the need to simplify complex data. By using interactive charts and graphs, this tool allows users to discover trends and patterns that would otherwise be hidden in spreadsheets."
-      },
-      {
-        id: "project-three",
-        title: "Project Three",
-        description: "An e-commerce platform with a focus on performance, security, and a great user experience.",
-        tags: ["E-commerce", "Stripe", "Next.js"],
-        imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2Q1aHVyNWZnbmRzZmhrYnZpcjR1enR0bGFqY2xtcml2Mmt0c2I1MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1BfTVY4t63t45362l8/giphy.gif",
-        githubUrl: "#",
-        detailedDescription: "The main goal of Project Three was to build a fast and reliable online store. We focused on optimizing loading times and implementing a secure payment gateway to build trust with customers."
-      },
-      {
-        id: "project-four",
-        title: "Project Four",
-        description: "A mobile-first social networking application designed to connect people with shared interests.",
-        tags: ["React Native", "Firebase", "Mobile"],
-        imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDBoY3hva3gybWMxZTVtMXY1aDZscDNsNGZkZWMxYm45Zzl0aXpjaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7aD4grHwn8vsC5wI/giphy.gif",
-        githubUrl: "#",
-        detailedDescription: "Project Four aims to connect like-minded individuals. The app uses a smart matching algorithm to suggest connections based on users' profiles and activities, fostering a sense of community."
-      },
-      {
-        id: "project-five",
-        title: "Project Five",
-        description: "A machine learning model that predicts stock market trends with high accuracy.",
-        tags: ["Python", "TensorFlow", "ML"],
-        imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnk0aWh0emFudmZ5aWNwMHRmMGI5bzJocG5kYjVmM2RtdXAwczU3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKpeeled7I8JdLS/giphy.gif",
-        githubUrl: "#",
-        detailedDescription: "This project was an exploration into the world of AI and finance. The model is trained on historical market data to predict future price movements, providing insights for investment strategies."
-      },
-      {
-        id: "project-six",
-        title: "Project Six",
-        description: "A real-time chat application using WebSockets for instant communication.",
-        tags: ["WebSockets", "Go", "Real-time"],
-        imageUrl: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzFycTNpMTd0NnE3Zjh2emYyMHEwbXVzYWZ6MXo1b2I0eGE2dmRsMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7aD1zs2a1tN3M9vW/giphy.gif",
-        githubUrl: "#",
-        detailedDescription: "The challenge for Project Six was to build a scalable, real-time chat service. By using WebSockets, the application can handle thousands of concurrent connections with minimal latency."
+        id: "post-one",
+        slug: "phd_recap",
+        title: "What I did during my PhD",
+        date: "2025-10-29",
       }
     ];
 
@@ -85,8 +50,8 @@
       email: 'mailto:jonathan.perrie@gmail.com',
       linkedIn: "https://www.linkedin.com/in/jonathan-perrie-6bb358a7/",
       googleScholar: "https://scholar.google.com/citations?user=cv6UZBkAAAAJ&hl=en",
-      github: "https://github.com/jonathanperrie#",
-      resume: "Perrie_Jonathan_Resume.pdf"
+      github: "https://github.com/jonathanperrie",
+      resume: "/Perrie_Jonathan_Resume.pdf"
     };
 
     // ICONS
@@ -118,27 +83,17 @@
 
     // CORE UI COMPONENTS
     const Header = ({ onNavigate }) => {
-      const scrollTo = (id) => {
-        onNavigate('home');
-        setTimeout(() => {
-          const element = document.getElementById(id);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          }
-        }, 0);
-      };
-
       return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-green-950/80 backdrop-blur-sm">
           <div className="container mx-auto px-6 py-4 flex justify-between items-center">
             <button onClick={() => onNavigate('home')} className="text-2xl font-bold text-green-200 hover:text-green-100 transition-colors">
-              Hello
+              Home
             </button>
             <nav>
               <ul className="flex items-center space-x-6">
                 <li>
-                  <button onClick={() => scrollTo('projects')} className="text-green-300 hover:text-green-100 transition-colors font-medium">
-                    Projects
+                  <button onClick={() => onNavigate('blog')} className="text-2xl font-bold text-green-200 hover:text-green-100 transition-colors">
+                    Blog
                   </button>
                 </li>
               </ul>
@@ -149,153 +104,167 @@
     };
 
     const Hero = () => {
-      const scrollToProjects = () => {
-        const element = document.getElementById('projects');
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      };
-
       return (
-        <section className="min-h-screen flex items-center justify-center text-center pt-20">
-          <div className="container mx-auto px-6 flex flex-col items-center text-center">
-            <img 
-                    src="banner.png" 
-                    alt="Costa Rica" 
-                    className="w-[30%] max-w-5xl rounded-xl shadow-2xl mb-12"
-            />
-            <h1 className="text-5xl md:text-7xl font-bold text-green-100 mb-4">Jon<span class="tight">a🌵h</span>an</h1>
-            <p className="text-xl md:text-2xl text-green-300 mb-8">PhD graduate looking for data science jobs in unique domains.</p>
-            <div className="flex justify-center items-center space-x-6 mb-8">
-              <a href={SOCIALS.email} aria-label="Email" className="text-green-300 hover:text-green-100 transition-colors"><MailIcon /></a>
-              <a href={SOCIALS.linkedIn} aria-label="LinkedIn" className="text-green-300 hover:text-green-100 transition-colors"><LinkedInIcon /></a>
-              <a href={SOCIALS.googleScholar} aria-label="Google Scholar" className="text-green-300 hover:text-green-100 transition-colors"><GoogleScholarIcon /></a>
-              <a href={SOCIALS.github} aria-label="GitHub" className="text-green-300 hover:text-green-100 transition-colors"><GitHubIcon /></a>
-              <a href={SOCIALS.resume} aria-label="Resume" className="text-green-300 hover:text-green-100 transition-colors"><DocumentIcon /></a>
+        <section className="min-h-screen flex items-center justify-center text-center pt-16">
+            <div className="container mx-auto px-6 flex flex-col items-center text-center">
+                <img
+                    src="/banner.png"
+                    alt="Scenic view of Costa Rica"
+                    className="w-full md:w-2/5 max-w-lg rounded-xl shadow-2xl mb-12"
+                />
+                <h1 className="text-5xl md:text-7xl font-bold text-green-100 mb-4">
+                    Jonathan Perrie
+                </h1>
+                <p className="text-xl md:text-2xl text-green-300 mb-8 max-w-3xl">
+                    PhD graduate looking for data science jobs in unique domains.
+                </p>
+                <div className="flex justify-center items-center space-x-6 mb-8">
+                    <a href={SOCIALS.email} aria-label="Email" className="text-green-300 hover:text-green-100 transition-colors"><MailIcon /></a>
+                    <a href={SOCIALS.linkedIn} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-green-300 hover:text-green-100 transition-colors"><LinkedInIcon /></a>
+                    <a href={SOCIALS.googleScholar} target="_blank" rel="noopener noreferrer" aria-label="Google Scholar" className="text-green-300 hover:text-green-100 transition-colors"><GoogleScholarIcon /></a>
+                    <a href={SOCIALS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-green-300 hover:text-green-100 transition-colors"><GitHubIcon /></a>
+                    <a href={SOCIALS.resume} target="_blank" rel="noopener noreferrer" aria-label="Resume" className="text-green-300 hover:text-green-100 transition-colors"><DocumentIcon /></a>
+                </div>
             </div>
-            <button
-              onClick={scrollToProjects}
-              className="bg-green-500 text-green-950 font-bold py-3 px-8 rounded-full hover:bg-green-400 transition-colors text-lg"
-            >
-              See My Work
-            </button>
-          </div>
         </section>
       );
     };
 
-    const ProjectCard = ({ project, onNavigate }) => (
-      <button onClick={() => onNavigate(project.id)} className="bg-green-950 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 text-left w-full h-full flex flex-col">
-        <img className="w-full h-48 object-cover" src={project.imageUrl} alt={project.title} />
-        <div className="p-6 flex-grow flex flex-col">
-          <h3 className="text-2xl font-bold text-green-100 mb-2">{project.title}</h3>
-          <p className="text-green-300 flex-grow mb-4">{project.description}</p>
-          <div className="flex flex-wrap gap-2 mb-4">
-            {project.tags.map(tag => (
-              <span key={tag} className="bg-green-800 text-green-200 text-sm font-semibold px-3 py-1 rounded-full">{tag}</span>
-            ))}
-          </div>
-          <p className="text-green-400 font-semibold mt-auto">Learn More</p>
-        </div>
-      </button>
-    );
-
-    const Projects = ({ onNavigate }) => (
-      <section id="projects" className="py-20">
+    const BlogPage = ({ onNavigate }) => (
+      <section id="blog" className="py-20 min-h-screen pt-24 md:pt-32">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-center text-green-100 mb-12">My Projects</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROJECTS.map(project => (
-              <ProjectCard key={project.id} project={project} onNavigate={onNavigate} />
-            ))}
+          <h2 className="text-4xl font-bold text-center text-green-100 mb-12">Blog</h2>
+          <div className="max-w-3xl mx-auto">
+            <ul className="space-y-4">
+              {BLOG_POSTS.map(post => (
+                <li key={post.slug}>
+                  <button
+                    onClick={() => onNavigate(post.slug)}
+                    className="block w-full text-left p-4 bg-green-950 rounded-lg hover:bg-green-900 transition-colors duration-300 shadow-lg"
+                  >
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-center">
+                      <h3 className="text-xl font-bold text-green-100">{post.title}</h3>
+                      <p className="text-green-400 font-mono text-sm sm:text-base flex-shrink-0 sm:ml-4 mt-1 sm:mt-0">
+                        {post.date}
+                      </p>
+                    </div>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
     );
+    
+    const BlogPostPage = ({ slug, onNavigate }) => {
+        const [content, setContent] = React.useState('');
+        const [isLoading, setIsLoading] = React.useState(true);
+        const [error, setError] = React.useState(null);
 
-    const Footer = () => (
-      <footer className="py-8">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-green-400">&copy; {new Date().getFullYear()}. All rights reserved.</p>
-        </div>
-      </footer>
-    );
+        const post = BLOG_POSTS.find(p => p.slug === slug);
 
-    const ProjectPage = ({ projectId, onNavigate }) => {
-        const project = PROJECTS.find(p => p.id === projectId);
+        React.useEffect(() => {
+            if (!post) return;
+            
+            const filePath = `/blog/${slug}.md`;
+            
+            const fetchPost = async () => {
+                setIsLoading(true);
+                setError(null);
+                try {
+                    const response = await fetch(filePath);
+                    if (!response.ok) {
+                        throw new Error(`Could not find post. (HTTP ${response.status})`);
+                    }
+                    const text = await response.text();
+                    setContent(text);
+                } catch (err) {
+                    console.error("Fetch error:", err);
+                    setError(err.message);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
 
-        if (!project) {
+            fetchPost();
+        }, [slug, post]);
+
+        if (!post) {
             return (
                 <div className="min-h-screen flex items-center justify-center text-center">
-                    <div>
-                        <h2 className="text-3xl font-bold text-green-100 mb-4">Project Not Found</h2>
-                        <button onClick={() => onNavigate('home')} className="text-green-400 hover:text-green-200 transition-colors">
-                            Back to all projects
-                        </button>
-                    </div>
+                    <h2 className="text-3xl font-bold text-green-100">404: Post not found.</h2>
                 </div>
             );
         }
 
-        return (
-            <div className="container mx-auto px-6 py-20 min-h-screen">
-                <div className="max-w-4xl mx-auto">
-                    <button onClick={() => onNavigate('home')} className="mb-8 text-green-400 hover:text-green-200 transition-colors font-semibold">
-                       Back to all projects
-                    </button>
-                    <h1 className="text-5xl font-bold text-green-100 mb-4">{project.title}</h1>
-                    <div className="flex flex-wrap gap-2 mb-8">
-                        {project.tags.map(tag => (
-                            <span key={tag} className="bg-green-800 text-green-200 text-sm font-semibold px-3 py-1 rounded-full">{tag}</span>
-                        ))}
-                    </div>
-                    <img src={project.imageUrl} alt={project.title} className="w-full rounded-lg shadow-lg mb-8" />
-                    <h2 className="text-3xl font-bold text-green-100 mb-4">The Idea</h2>
-                    <p className="text-lg text-green-300 leading-relaxed mb-8">{project.detailedDescription}</p>
-                    <a
-                        href={project.githubUrl}
-                        className="inline-block bg-green-500 text-green-950 font-bold py-3 px-8 rounded-full hover:bg-green-400 transition-colors text-lg"
-                    >
-                        View Project on GitHub
-                    </a>
+        let pageContent;
+        if (isLoading) {
+            pageContent = (
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-green-100 animate-pulse">Loading...</h2>
                 </div>
-            </div>
+            );
+        } else if (error) {
+            pageContent = (
+                <div className="text-center">
+                    <h2 className="text-3xl font-bold text-red-400">Error loading post.</h2>
+                    <p className="text-red-300 mt-2">{error}</p>
+                </div>
+            );
+        } else {
+            const htmlContent = marked.parse(content);
+            pageContent = (
+                <React.Fragment>
+                    <h1 className="text-4xl md:text-5xl font-bold text-green-100 mb-2">{post.title}</h1>
+                    <p className="text-green-400 font-mono mb-8">{post.date}</p>
+                    <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                </React.Fragment>
+            );
+        }
+
+        return (
+            <section className="py-20 min-h-screen pt-24 md:pt-32">
+                <div className="container mx-auto px-6 max-w-3xl">
+                    <button onClick={() => onNavigate('blog')} className="text-green-400 hover:text-green-200 transition-colors mb-8">
+                        &larr; Back to Blog
+                    </button>
+                    {pageContent}
+                </div>
+            </section>
         );
     };
 
-    const HomePage = ({ onNavigate }) => (
+    const HomePage = () => (
       <div>
         <Hero />
-        <Projects onNavigate={onNavigate} />
       </div>
     );
     
     // MAIN APP COMPONENT
     const App = () => {
       const [currentPage, setCurrentPage] = React.useState('home');
-
-      React.useEffect(() => {
-        window.scrollTo(0, 0);
-      }, [currentPage]);
       
       const handleNavigate = (pageId) => {
         setCurrentPage(pageId);
       };
 
       const renderPage = () => {
-        if (currentPage === 'home') {
-          return <HomePage onNavigate={handleNavigate} />;
-        }
-        return <ProjectPage projectId={currentPage} onNavigate={handleNavigate} />;
+        if (currentPage === 'home') return <HomePage />;
+        if (currentPage === 'blog') return <BlogPage onNavigate={handleNavigate} />;
+
+        const isBlogPost = BLOG_POSTS.some(p => p.slug === currentPage);
+        if (isBlogPost) return <BlogPostPage slug={currentPage} onNavigate={handleNavigate} />;
+
+        return <HomePage />;
       };
 
       return (
-          <div className="bg-[#102a23] text-green-200 font-sans">
+          <div className="bg-[#102a23] text-green-200 font-sans min-h-screen flex flex-col">
               <Header onNavigate={handleNavigate} />
-              <main>
+              <main className="flex-grow">
                   {renderPage()}
               </main>
-              <Footer />
           </div>
       );
     };
@@ -305,6 +274,5 @@
     root.render(<App />);
 
     </script>
-<script type="module" src="/index.tsx"></script>
 </body>
 </html>
