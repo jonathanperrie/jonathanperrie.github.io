@@ -9,6 +9,7 @@ Here are two GeoMx spots as composite images with their bounding boxes shown aft
 <img
     class="zoomable"
     src="../data/zen_bb_comp.png"
+    data-zoom-src="../data/zen_bb_comp.png"
     alt="Processed spots"
     style="width:25%; height:auto;border-radius:12px;"
 />
