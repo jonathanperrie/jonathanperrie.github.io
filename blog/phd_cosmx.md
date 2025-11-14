@@ -205,7 +205,7 @@ The simple way to find scale is to look in the fov_positions_file and find FOV d
     class="zoomable"
     src="../data/cosmx_scale_factor.png"
     alt="Aprox FOV scale."
-    style="width:90%; height:auto; border-radius:3px;"
+    style="width:25%; height:auto; border-radius:3px;"
 />
 *Aproximate scale calculation for FOVs when plotting by matrix.*
 
