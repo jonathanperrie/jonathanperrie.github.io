@@ -66,17 +66,58 @@
             background-color: #102a23;
             color: #a7f3d0;
         }
-        .prose h1, .prose h2, .prose h3 { color: #d1fae5; }
-        .prose p { color: #a7f3d0; }
-        .prose a { color: #6ee7b7; text-decoration: underline; }
-        .prose ul { list-style-type: disc; padding-left: 1.5rem; }
-        .prose li { margin-bottom: 0.5rem; }
+
+        .prose h1,
+        .prose h2,
+        .prose h3 {
+            color: #d1fae5;
+        }
+
+        .prose p {
+            color: #a7f3d0;
+        }
+
+        /* links */
+        .prose a {
+            color: #6ee7b7;
+            text-decoration: underline;
+        }
+
+        /* 🔹 special green for list text */
+        .prose li {
+            color: #34d399;      /* emerald list text */
+            margin-bottom: 0.5rem;
+        }
+
+        .prose ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+        }
+
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+
+        .prose ol > li::marker,
+        .prose ul > li::marker {
+            color: #4ade80;      /* brighter green markers */
+        }
+
+        /* 🔹 fix ugly black bold text */
+        .prose strong,
+        .prose b {
+            color: inherit;      /* use surrounding text color */
+            font-weight: 700;
+        }
+
         .prose pre {
             background-color: #0c1f1a;
             padding: 1rem;
             border-radius: 0.5rem;
             overflow-x: auto;
         }
+
         .prose code {
             color: #f0fdf4;
             font-family: monospace;
@@ -101,7 +142,13 @@
         slug: "phd_bb",
         title: "Bounding boxes in GeoMx",
         date: "2025-11-03",
-      }
+      },
+      {
+        id: "post-three",
+        slug: "phd_cosmx",
+        title: "Plotting CosMx FOVs",
+        date: "2025-11-10",
+      },
 ];
 
     const SOCIALS = {
