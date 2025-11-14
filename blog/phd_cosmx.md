@@ -105,7 +105,7 @@ CellComposite and CellLabels are mapped to the keys "hires" and "segmentation" r
 <img
     src="../data/cosmx_folders.png"
     alt="CosMx folders"
-    style="width:25%; height:auto; border-radius:3px;"
+    style="width:35%; height:auto; border-radius:3px;"
 />
 *Typical folders for CosMx data.*
 
@@ -187,7 +187,8 @@ adata.obs["supervise"] = adata.obs["supervise"].astype("category")
 1. *get_mm*: map cluster labels onto CellOverlay matrices
 2. *plot_domains*: plotting function for FOVs with too many args
 
-The key line to stitching FOVs was finding the proper FOV coordinates (X_mm, Y_mm) and then plotting the current matrix to that region. This took some trial and error to find the appropriate scale where subsequent FOVs were correctly aligned. 
+The key line to stitching FOVs was finding the proper transformation from FOV coordinates (X_mm, Y_mm) to matrix space. This took a little tickering to find the exact scale where subsequent FOVs were correctly aligned and not overlapping. In the snippet below, we have scale, the x and y coordinates from the FOV, and we are using these to compute an extent, which is where in the grid the current FOV matrix will be plotted. 
+
 <pre>
 ```python
 scale = 1045
@@ -198,6 +199,15 @@ extent = (x_pixel, x_pixel + matrix_to_plot.shape[1],
 plt.imshow(matrix_to_plot,...,extent=extent)
 </pre>
 
+The simple way to find scale is to look in the fov_positions_file and find FOV distances in X and Y. I believe FOVs must be square, so scale should be the same for both. We have divided scale by 8, but it is really just `matrix shape in one dimension (4256 px) / distance of adjacent FOVs (0.50909 mm)`.
+
+<img
+    class="zoomable"
+    src="../data/cosmx_scale_factor.png"
+    alt="Aprox FOV scale."
+    style="width:90%; height:auto; border-radius:3px;"
+/>
+*Aproximate scale calculation for FOVs when plotting by matrix.*
 
 ```python
 def get_mm(segmentation_map, clusters):
