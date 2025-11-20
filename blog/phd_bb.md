@@ -53,8 +53,8 @@ The code is on [GitHub](https://github.com/modlab246/TREM2_PTB/blob/main/geomx/i
 
 In this code block from the other notebook [to create composite images of the spots without boxes](https://github.com/modlab246/TREM2_PTB/blob/main/geomx/img/save_channel.ipynb), we loaded the X and Y coordinates flipped and then found that region for each spot. Note that these were large files requiring GBs of RAM, hence, for best practice we cleared memory after loading was complete. 
 
-<pre>
-```Python
+
+```python
 # DAPI stain
 mat = io.imread("../channel/PTB22.3_Blue.tiff")
 img={}
@@ -70,7 +70,7 @@ for x in img:
 
 del img
 del mat
-</pre>
+```
 
 ## Mapping coordinates 
 The bounding boxes without annotations provided externally did not have the same dimensions as the raw protein images. They were mislaigned, hence, we had to find the transformation from our raw protein coordinates to the spot boxes. We took the coordinates of two spots from the spreadsheet and then found their pixel coordinates in the adjusted image. This allowed us to find the position of the bounding boxes for each spot and then isolate and apply them to the new composites. 
@@ -88,8 +88,8 @@ The bounding boxes without annotations provided externally did not have the same
 ## Constructing the bounding box 
 
 First, we would find the transformed coordinates of the spot
-<pre>
-```Python	
+
+```python	
 y,x=spot[1][["ROICoordinateX","ROICoordinateY"]]
 roi=spot[1][["ROILabel"]].astype(int).values[0]
 x=np.round((x*x_221_sf)+x_221_cnst).astype(int)
@@ -97,7 +97,7 @@ y=np.round((y*y_221_sf)+y_221_cnst).astype(int)
 xw =128
 
 img_bb = mat[(x-xw):(x+xw),(y-xw):(y+xw)]
-</pre>
+```
 
 The idea was to find where pixels were white in the image and then find the middle-most point. Flip the matrix to find all non-white points and fill in (flood) the shape that contains the middle-most point. Note that for certain ROIs, some parameters had to be adjusted, so that the resulting boxes did not merge (ROIs 19 and 20 in this code snippet for PTB 22.1).
 
@@ -107,9 +107,11 @@ The idea was to find where pixels were white in the image and then find the midd
     style="width:100%; height:auto;border-radius:3px;"
 />
 
+*Example of fixing segmentation, identifying the correct white coarse GeoMx spot boundaries.*
 
-<pre>
-```Python	
+
+
+```python	
 # bounding box is white 
 white_mask = (img_bb == [255,255,255,255]).all(-1)
 white_pixels = np.where(white_mask)
@@ -133,12 +135,12 @@ else:
     interior_mask = (flood_mask == 2)
 
 image = (~(binary_dilation(interior_mask, structure=np.ones((3,3)), iterations = dilation_iter) & white_mask)).astype(np.uint8)*255
-</pre>
+```
 
 Afterwards we just applied some smoothing to the mask and combined it with the composite images per spot that we regenerated before saving the various versions of the GeoMx spot. 
 
-<pre>
-```Python	
+
+```python	
 target_image = cv2.imread(comp[roi], cv2.IMREAD_UNCHANGED) 
 
 smooth_image = ndimage.gaussian_filter(image, sigma=3)
@@ -183,4 +185,4 @@ plt.axis("off")
 plt.savefig("../bb_comp_mask/"+"PTB221_"+(str(roi)),dpi=400,bbox_inches='tight', pad_inches=0, transparent=True)
 plt.close(fig)
 plt.clf()
-</pre>
+```

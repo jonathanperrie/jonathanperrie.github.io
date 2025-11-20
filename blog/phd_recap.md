@@ -45,9 +45,9 @@ The genes enriched in between contrasts AvC and AvB are the A genes, and the gen
 
 ## Code
 Mapping fold change to 3D space and transforming 3D plane back into 2D. Note that we had to choose two genes on opposite ends of the plane to get a good projection. We converted genes in [RGB to hex colors](https://drive.google.com/file/d/1fTnh9-Va414HWgF7B67snyeMQ7Qm7wR1/view?usp=sharing). 
-<pre>
+
 ```R
-  # merge CvA, MvA, flipped MvC 
+# merge CvA, MvA, flipped MvC 
 df<-bind_cols(as.data.frame(res_ca),as.data.frame(res_ma),as.data.frame(res_mc))
 df$`log2FoldChange...14`<- -as.numeric(df$`log2FoldChange...14`)
 df$`log2FoldChange...2`<- as.numeric(df$`log2FoldChange...2`)
@@ -109,11 +109,11 @@ coords_2d$color <- df_color
 coords_2d$alpha <- alphas
 coords_2d$Gene <- rownames(coords_2d)
 uniq_color <- unique(df_color)  
-</pre>
+```
 
 
 Constructing axes for plot using same transformation. 
-<pre>
+
 ```R
 axis_cf <- c(1, 0, 0)  
 axis_mf <- c(0, 1, 0)  
@@ -153,10 +153,9 @@ gradient_colors <- color_transition_mf(num_points)
 axis_mf_df <- data.frame(x = axis_points * transformed_axis_mf[1], 
                          y = axis_points * transformed_axis_mf[2],
                          col = gradient_colors)
-</pre>
+```
 
 Plotting and labeling most significantly enriched genes. 
-<pre>
 ```R
 g <- ggplot(coords_2d, aes(x=x, y=y, color=color, alpha=alpha))
 g <- g + geom_segment(data = axis_cf_df,
@@ -275,4 +274,4 @@ g <- g+annotate("text", x = min(axis_cf_df_legend$x)+0.525, y = min(axis_cf_df_l
                 size = 6, color = "black", alpha = 1, fontface = "bold", parse = TRUE)
 
 ggsave(file = "plots/manuscript/3DVolc.png", plot = g, device = "png", width=9,height=9, dpi = 400)
-</pre>
+```

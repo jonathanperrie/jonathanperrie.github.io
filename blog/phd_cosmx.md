@@ -107,6 +107,7 @@ CellComposite and CellLabels are mapped to the keys "hires" and "segmentation" r
     alt="CosMx folders"
     style="width:35%; height:auto; border-radius:3px;"
 />
+
 *Typical folders for CosMx data.*
 
 
@@ -159,6 +160,7 @@ With CosMx, the recommendation is to use their specific clustering method, [InSi
     alt="InSituType FAQ."
     style="width:90%; height:auto; border-radius:3px;"
 />
+
 *InSituType FAQ specifying how many genes to use for clustering.*
 
 ```python
@@ -189,7 +191,7 @@ adata.obs["supervise"] = adata.obs["supervise"].astype("category")
 
 The key line to stitching FOVs was finding the proper transformation from FOV coordinates (X_mm, Y_mm) to matrix space. This took a little tickering to find the exact scale where subsequent FOVs were correctly aligned and not overlapping. In the snippet below, we have scale, the x and y coordinates from the FOV, and we are using these to compute an extent, which is where in the grid the current FOV matrix will be plotted. 
 
-<pre>
+
 ```python
 scale = 1045
 x_pixel, y_pixel = x_coord * scale * 8, y_coord * scale * 8
@@ -197,7 +199,7 @@ x_pixel, y_pixel = x_coord * scale * 8, y_coord * scale * 8
 extent = (x_pixel, x_pixel + matrix_to_plot.shape[1],
           y_pixel, y_pixel + matrix_to_plot.shape[0])
 plt.imshow(matrix_to_plot,...,extent=extent)
-</pre>
+```
 
 The simple way to find scale is to look in the fov_positions_file and find FOV distances in X and Y. I believe FOVs must be square, so scale should be the same for both. We have divided scale by 8, but it is really just `matrix shape in one dimension (4256 px) / distance of adjacent FOVs (0.50909 mm)`.
 
@@ -207,6 +209,7 @@ The simple way to find scale is to look in the fov_positions_file and find FOV d
     alt="Aprox FOV scale."
     style="width:25%; height:auto; border-radius:3px;"
 />
+
 *Aproximate scale calculation for FOVs when plotting by matrix.*
 
 ```python
@@ -539,6 +542,7 @@ As we can see from the FOV map, there are two 3x3 grids of FOVs, and so for late
     alt="FOV map"
     style="width:45%; height:auto; border-radius:3px;"
 />
+
 *FOV map of CosMx pancreas data set.*
 
 ```python
@@ -563,6 +567,7 @@ plot_domains(
     alt="All cell types"
     style="width:45%; height:auto; border-radius:3px;"
 />
+
 *All cell types across all FOVs with legend.*
 
 
@@ -590,6 +595,7 @@ plot_domains(
     alt="Bottom half with select cell types"
     style="width:25%; height:auto; border-radius:3px;"
 />
+
 *Select cell types highlighted with alpha arg.*
 
 ## Displaying genes
@@ -632,6 +638,7 @@ plot_domains(
     alt="Gene transcripts and hollow cells"
     style="width:25%; height:auto; border-radius:3px;"
 />
+
 *Select cell types with gene transcripts IAPP, SPP1, CD68, and CD3E indicated by pink, blue, red, and purple markers respectively.*
 
 ## Contacts 
@@ -722,6 +729,7 @@ plot_domains(
     alt="Interacting cell types"
     style="width:25%; height:auto; border-radius:3px;"
 />
+
 *Cell types in contact with macrophage and beta cells.* 
 
 ## Plotting a gradient over some cells 
@@ -773,4 +781,5 @@ plot_domains(
     alt="expression spectrum"
     style="width:25%; height:auto;border-radius:3px;"
 />
+
 *Spectrum of expression of SPP1 in acinar cell types 1 and 2.*
