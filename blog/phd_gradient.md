@@ -424,6 +424,8 @@ Every cell gets a score derived from its rank position based on normalized expre
 4. Take product of inverted negative relative ranks
 5. Combine positive and negative scores and normalize 
 
+One thing to note is that flipping the positive and negative genes will result in a different but related score and color distribution.
+
 ```python
 # product of scaled positive ranks 
 expr_pos = sub_adata[:, genes_pos].X.toarray()
