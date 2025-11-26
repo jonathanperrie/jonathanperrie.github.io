@@ -744,7 +744,7 @@ scale_expr = (gene_expr - gene_expr.min()) / (gene_expr.max() - gene_expr.min())
 
 ```python
 # 256 bins 
-bin_edges = np.linspace(scale_expr.min(), scale_expr.max(), 256)
+bin_edges = np.linspace(scale_expr.min(), scale_expr.max(), 255)
 adata.obs['bin'] = 0
 
 # upscale from 0-1 to 256 scale 
@@ -752,7 +752,7 @@ adata.obs.loc[adata.obs.supervise.isin(np.array([1,2])), 'bin'] = np.digitize(sc
 
 # get 256 colors from viridis
 cmap = cc.cm.CET_I3  
-spc_colors = [mpl.colors.to_hex(cmap(i / 255)) for i in range(256)]
+spc_colors = [mpl.colors.to_hex(cmap(i / 254)) for i in range(255)]
 # grey as our default for excluded cells 
 spc_colors = ['#A6A6A6'] + spc_colors
 ```

@@ -311,6 +311,31 @@
       background-color: #63c88f;
     }
 
+    .nb-output {
+      background-color: #63c88f;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+      color: #f0fdf4;             /* readable mint/white text */
+    }
+
+    .nb-output table {
+      border-collapse: collapse;
+      width: 100%;
+      background: transparent;
+    }
+
+    .nb-output th,
+    .nb-output td {
+      border: 1px solid rgba(15, 46, 35, 0.35); /* subtle dark border */
+      padding: 0.3rem 0.5rem;
+      font-size: 0.85rem;
+      text-align: center;          /* CENTER everything */
+      vertical-align: top;         /* top for multi-line cells */
+      color: inherit;
+    }
+
     /* Container around the main plot */
     .plot-wrapper {
       position: relative;
@@ -390,6 +415,12 @@
         slug: "phd_domain",
         title: "CosMx spatial domains",
         date: "2025-11-14",
+      },
+      {
+        id: "post-five",
+        slug: "phd_gradient",
+        title: "CosMx spatial gradients",
+        date: "2025-11-25",
       },
     ];
 
