@@ -10,6 +10,7 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="https://unpkg.com/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script>
   <script>
     (function () {
@@ -317,7 +318,8 @@
       border-radius: 0.5rem;
       margin: 1rem 0;
       overflow-x: auto;
-      color: #f0fdf4;             /* readable mint/white text */
+      color: #f0fdf4;
+      /* readable mint/white text */
     }
 
     .nb-output table {
@@ -328,11 +330,14 @@
 
     .nb-output th,
     .nb-output td {
-      border: 1px solid rgba(15, 46, 35, 0.35); /* subtle dark border */
+      border: 1px solid rgba(15, 46, 35, 0.35);
+      /* subtle dark border */
       padding: 0.3rem 0.5rem;
       font-size: 0.85rem;
-      text-align: center;          /* CENTER everything */
-      vertical-align: top;         /* top for multi-line cells */
+      text-align: center;
+      /* CENTER everything */
+      vertical-align: top;
+      /* top for multi-line cells */
       color: inherit;
     }
 
@@ -421,6 +426,12 @@
         slug: "phd_gradient",
         title: "CosMx spatial gradients",
         date: "2025-11-25",
+      },
+      {
+        id: "post-six",
+        slug: "mspen_intro",
+        title: "MS Pen workflow",
+        date: "2025-12-02",
       },
     ];
 
@@ -683,6 +694,7 @@
       const [content, setContent] = React.useState('');
       const [isLoading, setIsLoading] = React.useState(true);
       const [error, setError] = React.useState(null);
+      const contentRef = React.useRef(null);
 
       const post = BLOG_POSTS.find(p => p.slug === slug);
 
@@ -756,10 +768,32 @@
         });
 
         return () => {
-          handlers.forEach(({ element, fn }) => {
-            element.removeEventListener('click', fn);
+          hotspots.forEach((h, i) => {
+            h.removeEventListener('click', handlers[i].fn);
           });
         };
+      }, [post, content]);
+
+      // Effect to execute scripts embedded in markdown
+      React.useEffect(() => {
+        if (!content || !contentRef.current) return;
+
+        const container = contentRef.current;
+        const scripts = container.querySelectorAll('script');
+
+        scripts.forEach(oldScript => {
+          // Check if we already processed this script to avoid infinite loops/double execution
+          if (oldScript.dataset.executed) return;
+
+          const newScript = document.createElement('script');
+          Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+          newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+
+          // Mark as executed
+          newScript.dataset.executed = "true";
+
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
       }, [content]);
 
       if (!post) {
@@ -790,7 +824,11 @@
           <React.Fragment>
             <h1 className="text-4xl md:text-5xl font-bold text-green-100 mb-2">{post.title}</h1>
             <p className="text-green-400 mb-8">{post.date}</p>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+            <div
+              ref={contentRef}
+              className="prose max-w-none"
+              dangerouslySetInnerHTML={{ __html: htmlContent }}
+            />
           </React.Fragment>
         );
       }
