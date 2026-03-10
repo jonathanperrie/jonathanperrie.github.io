@@ -858,6 +858,18 @@
       );
     };
 
+    const NotFoundPage = ({ onNavigate }) => (
+      <section className="min-h-screen flex items-center justify-center text-center">
+        <div>
+          <h1 className="text-6xl font-bold text-green-100 mb-4">404</h1>
+          <p className="text-green-300 text-xl mb-8">Page not found.</p>
+          <button onClick={() => onNavigate('home')} className="text-green-400 underline hover:text-green-200 transition-colors">
+            Go home
+          </button>
+        </div>
+      </section>
+    );
+
     const HomePage = () => (
       <div>
         <Hero />
@@ -871,7 +883,7 @@
       if (path === '/blog') return 'blog';
       const blogMatch = path.match(/^\/blog\/(.+)$/);
       if (blogMatch) return blogMatch[1];
-      return 'home';
+      return '404';
     };
 
     const App = () => {
@@ -899,7 +911,7 @@
         const isBlogPost = BLOG_POSTS.some(p => p.slug === currentPage);
         if (isBlogPost) return <BlogPostPage slug={currentPage} onNavigate={handleNavigate} />;
 
-        return <HomePage />;
+        return <NotFoundPage onNavigate={handleNavigate} />;
       };
 
       return (
