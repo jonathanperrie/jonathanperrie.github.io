@@ -849,11 +849,22 @@
     );
 
     // MAIN APP COMPONENT
+    const getPageFromHash = () => {
+      const hash = window.location.hash.replace(/^#\/?/, '');
+      return hash || 'home';
+    };
+
     const App = () => {
-      const [currentPage, setCurrentPage] = React.useState('home');
+      const [currentPage, setCurrentPage] = React.useState(getPageFromHash);
+
+      React.useEffect(() => {
+        const onHashChange = () => setCurrentPage(getPageFromHash());
+        window.addEventListener('hashchange', onHashChange);
+        return () => window.removeEventListener('hashchange', onHashChange);
+      }, []);
 
       const handleNavigate = (pageId) => {
-        setCurrentPage(pageId);
+        window.location.hash = pageId === 'home' ? '' : pageId;
       };
 
       const renderPage = () => {
