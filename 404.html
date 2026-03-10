@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    var l = window.location;
+    l.replace(
+      l.protocol + '//' + l.host + '/?p=' +
+      l.pathname.slice(1).replace(/&/g, '~and~') +
+      l.hash
+    );
+  </script>
+</head>
+</html>

@@ -8,6 +8,15 @@
   <meta name="description" content="Jonathan Perrie — PhD graduate and data scientist. Writing about spatial transcriptomics, bioinformatics, and data science." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://jonathanperrie.github.io/" />
+  <script>
+    (function () {
+      var search = window.location.search;
+      if (search.startsWith('?p=')) {
+        var path = '/' + search.slice(3).replace(/~and~/g, '&');
+        window.history.replaceState(null, null, path || '/');
+      }
+    })();
+  </script>
   <meta property="og:title" content="Jonathan Perrie" />
   <meta property="og:description" content="PhD graduate and data scientist writing about spatial transcriptomics, bioinformatics, and data science." />
   <meta property="og:url" content="https://jonathanperrie.github.io/" />
@@ -856,22 +865,31 @@
     );
 
     // MAIN APP COMPONENT
-    const getPageFromHash = () => {
-      const hash = window.location.hash.replace(/^#\/?/, '');
-      return hash || 'home';
+    const getPageFromPath = () => {
+      const path = window.location.pathname;
+      if (path === '/' || path === '') return 'home';
+      if (path === '/blog') return 'blog';
+      const blogMatch = path.match(/^\/blog\/(.+)$/);
+      if (blogMatch) return blogMatch[1];
+      return 'home';
     };
 
     const App = () => {
-      const [currentPage, setCurrentPage] = React.useState(getPageFromHash);
+      const [currentPage, setCurrentPage] = React.useState(getPageFromPath);
 
       React.useEffect(() => {
-        const onHashChange = () => setCurrentPage(getPageFromHash());
-        window.addEventListener('hashchange', onHashChange);
-        return () => window.removeEventListener('hashchange', onHashChange);
+        const onPopState = () => setCurrentPage(getPageFromPath());
+        window.addEventListener('popstate', onPopState);
+        return () => window.removeEventListener('popstate', onPopState);
       }, []);
 
       const handleNavigate = (pageId) => {
-        window.location.hash = pageId === 'home' ? '' : pageId;
+        let url;
+        if (pageId === 'home') url = '/';
+        else if (pageId === 'blog') url = '/blog';
+        else url = '/blog/' + pageId;
+        history.pushState(null, '', url);
+        setCurrentPage(pageId);
       };
 
       const renderPage = () => {
