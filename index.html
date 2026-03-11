@@ -858,14 +858,11 @@
       );
     };
 
-    const NotFoundPage = ({ onNavigate }) => (
+    const NotFoundPage = () => (
       <section className="min-h-screen flex items-center justify-center text-center">
         <div>
           <h1 className="text-6xl font-bold text-green-100 mb-4">404</h1>
-          <p className="text-green-300 text-xl mb-8">Page not found.</p>
-          <button onClick={() => onNavigate('home')} className="text-green-400 underline hover:text-green-200 transition-colors">
-            Go home
-          </button>
+          <p className="text-green-300 text-xl">Page not found.</p>
         </div>
       </section>
     );
@@ -900,7 +897,7 @@
         if (pageId === 'home') url = '/';
         else if (pageId === 'blog') url = '/blog';
         else url = '/blog/' + pageId;
-        history.pushState(null, '', url);
+        window.history.pushState(null, '', url);
         setCurrentPage(pageId);
       };
 
@@ -911,7 +908,7 @@
         const isBlogPost = BLOG_POSTS.some(p => p.slug === currentPage);
         if (isBlogPost) return <BlogPostPage slug={currentPage} onNavigate={handleNavigate} />;
 
-        return <NotFoundPage onNavigate={handleNavigate} />;
+        return <NotFoundPage />;
       };
 
       return (
