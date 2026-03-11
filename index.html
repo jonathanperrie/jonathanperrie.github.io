@@ -491,15 +491,15 @@
       return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-green-950/80 backdrop-blur-sm">
           <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-            <button onClick={() => onNavigate('home')} className="text-2xl font-bold text-green-200 hover:text-green-100 transition-colors">
+            <a href="/" onClick={(e) => { e.preventDefault(); onNavigate('home'); }} className="text-2xl font-bold text-green-200 hover:text-green-100 transition-colors">
               Home
-            </button>
+            </a>
             <nav>
               <ul className="flex items-center space-x-6">
                 <li>
-                  <button onClick={() => onNavigate('blog')} className="text-2xl font-bold text-green-200 hover:text-green-100 transition-colors">
+                  <a href="/blog" onClick={(e) => { e.preventDefault(); onNavigate('blog'); }} className="text-2xl font-bold text-green-200 hover:text-green-100 transition-colors">
                     Blog
-                  </button>
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -653,8 +653,9 @@
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <button
-            onClick={() => onNavigate(post.slug)}
+          <a
+            href={`/blog/${post.slug}`}
+            onClick={(e) => { e.preventDefault(); onNavigate(post.slug); }}
             className="block w-full text-left p-4 hover:bg-green-900 transition-colors duration-300"
           >
             <div className="flex flex-col sm:flex-row justify-between sm:items-center">
@@ -663,7 +664,7 @@
                 {post.date}
               </p>
             </div>
-          </button>
+          </a>
 
           {/* Preview Area */}
           <div
