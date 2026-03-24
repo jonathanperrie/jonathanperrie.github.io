@@ -876,7 +876,7 @@
 
     // MAIN APP COMPONENT
     const getPageFromPath = () => {
-      const path = window.location.pathname;
+      const path = window.location.pathname.replace(/\/$/, '') || '/';
       if (path === '/' || path === '') return 'home';
       if (path === '/blog') return 'blog';
       const blogMatch = path.match(/^\/blog\/(.+)$/);
